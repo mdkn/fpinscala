@@ -11,13 +11,6 @@ object MyModule {
     msg.format(x, abs(x))
   }
 
-  def main(args: Array[String]): Unit = {
-    println(formatAbs(-42))
-    println(formatFactorial(7))
-    println(formatResult("absolute value", -42, abs))
-    println(fib(6))
-  }
-
   //recursive method go needs result type.
   def factorial(n: Int): Int = {
     @annotation.tailrec
@@ -61,5 +54,38 @@ object MyModule {
       if(n <= 0) a
       else go(b, a + b, n - 1)
     go(0, 1, n)
+  }
+
+  def isSorted[A](as: Array[A], ordered: (A,A) => Boolean): Boolean = {
+    def go(n: Int): Boolean = {
+      if(n >= as.length) true
+      else if(!ordered(as(n-1), as(n))) false
+      else go(n + 1)
+    }
+    go(1)
+  }
+  def main(args: Array[String]): Unit = {
+    println(formatAbs(-42))
+    println(formatFactorial(7))
+    println(formatResult("absolute value", -42, abs))
+    println(fib(6))
+    println(isSorted(Array(1,2,3), (a: Int,b: Int) => a < b))
+    println(isSorted(Array(4,2,3), (a: Int,b: Int) => a < b))
+  }
+
+  def partical1[A, B, C](a: A, f:(A, B) => C): B => C = {
+    (b: B) => f(a, b)
+  }
+
+  def curry[A,B,C](f: (A, B) => C): A => (B => C) = {
+    (a: A) => (b: B) => f(a, b)
+  }
+
+  def uncurry[A,B,C](f: A => B => C): (A, B) => C = {
+    (a: A, b: B) => f(a)(b)
+  }
+
+  def compose[A,B,C](f: B => C, g: A => B): A => C = {
+    (a: A) => f(g(a))
   }
 }
