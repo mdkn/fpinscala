@@ -15,6 +15,7 @@ object MyModule {
     println(formatAbs(-42))
     println(formatFactorial(7))
     println(formatResult("absolute value", -42, abs))
+    println(fib(6))
   }
 
   //recursive method go needs result type.
@@ -35,5 +36,30 @@ object MyModule {
   def formatResult(name: String, n: Int, f: Int => Int) = {
     val msg = "The %s of %d is %d"
     msg.format(name, n, f(n))
+  }
+
+  def finsFirst(ss: Array[String], key: String): Int = {
+    @annotation.tailrec
+    def loop(n: Int): Int =
+      if(n >= ss.length) -1
+      else if (ss(n) == key) n
+      else loop(n + 1)
+    loop(0)
+  }
+
+  def findFirst1[A](ss: Array[A], p:A => Boolean): Int = {
+    @annotation.tailrec
+    def loop(n: Int): Int =
+      if(n >= ss.length) -1
+      else if(p(ss(n))) n
+      else loop(n + 1)
+    loop(0)
+  }
+
+  def fib(n: Int): Int = {
+    def go(a: Int, b: Int, n: Int): Int =
+      if(n <= 0) a
+      else go(b, a + b, n - 1)
+    go(0, 1, n)
   }
 }
