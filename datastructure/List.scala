@@ -30,11 +30,19 @@ object List {
     case _ => 101
   }
 
+  def tail[A](as: List[A]): List[A] = as match {
+    case Cons(_, xs) => xs
+    case _ => sys.error("empty")
+  }
+
 }
 
 object Main {
   def main(args: Array[String]): Unit = {
     println(List.sum(List(1, 2, 3)))
     println(List.x)
+    println(List.tail(List(1,2,3,4)))
+    //println(List.tail(Nil)) => Exception in thread "main" java.lang.RuntimeException: empty
+    println(List.tail(List(1)))
   }
 }
