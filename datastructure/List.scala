@@ -29,4 +29,12 @@ object List {
     case Cons(h, t) => h + sum(t)
     case _ => 101
   }
+
+}
+
+object Main {
+  def main(args: Array[String]): Unit = {
+    println(List.sum(List(1, 2, 3)))
+    println(List.x)
+  }
 }
