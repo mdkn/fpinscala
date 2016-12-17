@@ -32,7 +32,12 @@ object List {
 
   def tail[A](as: List[A]): List[A] = as match {
     case Cons(_, xs) => xs
-    case _ => sys.error("empty")
+    case _ => sys.error("empty list.")
+  }
+
+  def setHead[A](as: List[A], a: A): List[A] = as match {
+    case Cons(_, xs) => Cons(a, xs)
+    case _ => sys.error("empty list.")
   }
 
 }
@@ -44,5 +49,6 @@ object Main {
     println(List.tail(List(1,2,3,4)))
     //println(List.tail(Nil)) => Exception in thread "main" java.lang.RuntimeException: empty
     println(List.tail(List(1)))
+    println(List.setHead(List(1,2,3,4), 5))
   }
 }
