@@ -40,6 +40,26 @@ object List {
     case _ => sys.error("empty list.")
   }
 
+  /*
+  def drop[A](as: List[A], n: Int): List[A] = as match {
+    case Cons(_, _) if n == 0 => as
+    case Cons(_, xs) if n >= 1 => drop(xs, n - 1)
+    case _ => sys.error("as is empty list or n is negative.")
+  }
+  */
+
+  def drop[A](as: List[A], n: Int): List[A] =
+    if (n == 0) as
+    else as match {
+      case Nil => Nil
+      case Cons(_, xs) => drop(xs, n - 1)
+    }
+
+  def dropWhile[A](as: List[A], f: A => Boolean): List[A] = as match {
+    case Cons(x, xs) if f(x) => as
+    case Nil => Nil
+    case Cons(_, xs) => dropWhile(xs, f)
+  }
 }
 
 object Main {
@@ -50,5 +70,6 @@ object Main {
     //println(List.tail(Nil)) => Exception in thread "main" java.lang.RuntimeException: empty
     println(List.tail(List(1)))
     println(List.setHead(List(1,2,3,4), 5))
+    println(List.drop(List(1,2,3,4),2))
   }
 }
